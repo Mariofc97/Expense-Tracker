@@ -1,0 +1,14 @@
+[
+  {
+    "description": "Food",
+    "value": "food"
+  },
+  {
+    "description": "Transportation",
+    "value": "transportation"
+  },
+  {
+    "description": "Entertainment",
+    "value": "entertainment"
+  }
+]
