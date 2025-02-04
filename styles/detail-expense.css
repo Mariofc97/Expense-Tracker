@@ -1,0 +1,15 @@
+nav .fa-trash-can {
+  color: #fff;
+}
+
+.category {
+  text-transform: capitalize;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.btn-edit {
+  padding: 10px;
+}

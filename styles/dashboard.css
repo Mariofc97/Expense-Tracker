@@ -4,7 +4,7 @@ footer {
 }
 
 .add-expense {
-  background-color: var(--btn-background-default);
+  background-color: var(--background-default);
   width: 56px;
   height: 56px;
   border-radius: 50%;

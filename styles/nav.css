@@ -1,0 +1,18 @@
+nav {
+  background-color: #fd3c4a;
+}
+
+nav .title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
+nav .fa-solid {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+nav .fa-arrow-left {
+  color: #fff;
+}

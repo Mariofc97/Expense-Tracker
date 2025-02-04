@@ -5,5 +5,23 @@
 }
 
 :root {
-  --btn-background-default: #7f3dff;
+  --background-default: #fd3c4a;
+}
+
+.btn-primary {
+  width: 150px;
+  height: 45px;
+  background-color: var(--background-default);
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #fcfcfc;
+  border: 1px solid var(--background-default);
+  color: var(--background-default);
+}
+
+.btn-primary:active {
+  background-color: var(--background-default) !important;
+  border: 1px solid var(--background-default);
 }
