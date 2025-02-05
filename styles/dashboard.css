@@ -1,3 +1,49 @@
+header {
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.gradient-section{
+  background: linear-gradient(to bottom, rgba(255, 246, 229, 1), rgba(248, 237, 216, 0) );
+  height: 100vh;
+}
+
+.accountBalance{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.containerIncome{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  width: 40%;
+  background-color: rgba(0, 168, 107, 1);
+  border-radius: 20px;
+  padding: 10px;  
+}
+
+.containerExpense{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  color: white;
+  width: 40%;
+  background-color: rgba(253, 60, 74, 1);
+  border-radius: 20px;
+  padding: 10px;
+}
+
+
 footer {
   position: fixed;
   bottom: 0;

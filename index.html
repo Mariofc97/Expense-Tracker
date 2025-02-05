@@ -28,9 +28,35 @@
     <link rel="stylesheet" href="./styles/dashboard.css" />
   </head>
   <body>
-    <main>
-      <div class="container"></div>
-    </main>
+    <div class="gradient-section">
+      <header>
+        <i class="fa-solid fa-user fa-xl" style="color: #7F3DFF; text;"></i>
+        <i class="fa-solid fa-bell fa-xl" style="color: #7F3DFF;"></i>
+      </header>
+      <main>
+        <div class="container">
+          <section id="accountBalance">
+            <p style="color: gray; text-align: center;">Account Balance</p>
+            <p style="font-size: xx-large; font-weight: bolder; text-align: center;">$9400</p>
+            <article class="incomeExpenses">
+              <div class="containerIncome">
+                <div><img src="./assets/Income.svg" alt="Income"></div>
+                <div><p>Income</p></div>
+                <div><p><strong>$5000</strong></p></div>
+                
+              </div>
+              <div class="containerExpense">
+                <div><img src="./assets/Expenses.svg" alt="Income"></div>
+                <div><p>Expenses</p></div>
+                <div><p><strong>$5000</strong></p></div>
+              </div>
+            </article>
+
+          </section>
+    </div>
+
+        </div>
+      </main>
     <footer class="d-flex justify-content-center w-100 py-3">
       <div class="add-expense">
         <a href="./pages/create-expense.html"
