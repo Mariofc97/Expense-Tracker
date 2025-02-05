@@ -16,31 +16,34 @@ header {
   justify-content: center;
   align-items: center;
   margin-top: 100px;
-  
 }
 
 .containerIncome{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  width: 30%;
   align-items: center;
   color: white;
-  width: 45%;
   background-color: rgba(0, 168, 107, 1);
   border-radius: 20px;
-  padding: 10px;  
+  padding: 0 15vw;
 }
 
 .containerExpense{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  width: 30%;
   align-items: center;
   color: white;
-  width: 45%;
   background-color: rgba(253, 60, 74, 1);
   border-radius: 20px;
-  padding: 10px;
+  padding: 0 15vw;
+}
+
+.contentCards {
+  padding:10px;
 }
 
 
