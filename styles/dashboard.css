@@ -19,8 +19,8 @@ header {
 
 .accountBalance {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  gap: 20px;
   justify-content: center;
   align-items: center;
 }
@@ -31,7 +31,7 @@ header {
   justify-content: space-between;
   align-items: center;
   color: white;
-  width: 40%;
+  width: 45%;
   background-color: rgba(0, 168, 107, 1);
   border-radius: 20px;
   padding: 10px;
@@ -42,9 +42,8 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  display: flex;
   color: white;
-  width: 40%;
+  width: 45%;
   background-color: rgba(253, 60, 74, 1);
   border-radius: 20px;
   padding: 10px;
