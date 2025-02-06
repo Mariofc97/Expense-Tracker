@@ -8,45 +8,47 @@ header {
   justify-content: space-between;
 }
 
-.gradient-section {
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 246, 229, 1),
-    rgba(248, 237, 216, 0)
-  );
+.gradient-section{
+  background: linear-gradient(to bottom, rgba(255, 246, 229, 1), rgba(248, 237, 216, 0) );
   height: 100vh;
 }
 
-.accountBalance {
+.incomeExpenses{
   display: flex;
   flex-direction: row;
   gap: 20px;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
+  margin-bottom: 50px;
 }
 
-.containerIncome {
+.containerIncome{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  width: 30%;
   align-items: center;
   color: white;
-  width: 45%;
   background-color: rgba(0, 168, 107, 1);
   border-radius: 20px;
-  padding: 10px;
+  padding: 0 15vw;
 }
 
-.containerExpense {
+.containerExpense{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  width: 30%;
   align-items: center;
   color: white;
-  width: 45%;
   background-color: rgba(253, 60, 74, 1);
   border-radius: 20px;
-  padding: 10px;
+  padding: 0 15vw;
+}
+
+.contentCards {
+  padding:10px;
 }
 
 footer {
