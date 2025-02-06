@@ -67,6 +67,7 @@ background-color: #03A9F4;
 
 </style>
   <body>
+    <div id="expenseChart" style="width: 100%; height: 300px;"></div>
     <main class="py-5 px-5">
       <div class="container"></div>
       <div class="d-flex justify-content-between align-items-center mb-4">
@@ -80,6 +81,51 @@ background-color: #03A9F4;
    
 
   <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+    if (expenses.length === 0) {
+      document.getElementById("expenseChart").innerHTML = "<p class='text-muted'>No expenses to display.</p>";
+      return;
+    }
+
+
+    const expenseData = {};
+    expenses.forEach(expense => {
+      const date = new Date(expense.date).toISOString().split("T")[0]; 
+      expenseData[date] = (expenseData[date] || 0) + parseFloat(expense.amount);
+    });
+
+
+    const dates = Object.keys(expenseData).sort(); 
+    const amounts = dates.map(date => expenseData[date]);
+
+
+    const trace = {
+      x: dates,
+      y: amounts,
+      type: "scatter",
+      mode: "lines",
+      line: { 
+        shape: "spline", 
+        color: "#7E57C2", 
+        width: 3 
+      },
+      fill: "tozeroy", 
+    };
+
+    const layout = {
+      autosize: true, 
+      paper_bgcolor: "rgba(0,0,0,0)",
+      plot_bgcolor: "rgba(0,0,0,0)",
+    };
+
+    const config = { responsive: true };
+
+    Plotly.newPlot("expenseChart", [trace], layout, config);
+
+    window.onresize = () => Plotly.relayout("expenseChart", { width: window.innerWidth * 0.9 });
+  });
       document.addEventListener("DOMContentLoaded", () => {
           const expenseListContainer = document.getElementById("expenseList");
           const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
