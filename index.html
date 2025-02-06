@@ -28,36 +28,56 @@
     <link rel="stylesheet" href="./styles/dashboard.css" />
   </head>
   <body>
-    <div class="gradient-section">
-      <header>
-        <i class="fa-solid fa-user fa-2xl" style="color: #7F3DFF;"></i>
-        <i class="fa-solid fa-bell fa-2xl" style="color: #7F3DFF;"></i>
-      </header>
-      <main>
-        <div class="container">
-          <section id="accountBalance">
-            <p style="color: gray; text-align: center;">Account Balance</p>
-            <h1 style="text-align: center; font-size: 5vw;">$9400</h1>
-            <article class="incomeExpenses">
-              <div class="containerIncome">
-                <div class="imageCash"><img src="./assets/Income.svg" alt="Income" style="width: 8vw;"></div>
-                <div class="contentCards"><p>Income <br><strong style="font-size: 4vw">$5000</strong><p></p></div>
+    <header>
+      <nav class="d-flex justify-content-between p-5">
+        <i class="fa-solid fa-user fa-2xl" style="color: #7f3dff"></i>
+        <i class="fa-solid fa-bell fa-2xl" style="color: #7f3dff"></i>
+      </nav>
+    </header>
+    <main>
+      <div class="container">
+        <section id="accountBalance">
+          <p style="color: gray; text-align: center">Account Balance</p>
+          <h1 style="text-align: center; font-size: 5vw">$9400</h1>
+          <article class="incomeExpenses">
+            <div class="containerIncome">
+              <div class="imageCash">
+                <img
+                  src="./assets/Income.svg"
+                  alt="Income"
+                  style="width: 8vw"
+                />
               </div>
-              <div class="containerExpense">
-                <div class="imageCash"><img src="./assets/Expenses.svg" alt="Expenses" style="width: 8vw;"></div>
-                <div class="contentCards"><p>Expenses <br><strong style="font-size: 4vw">$5000</strong></p>
-                </div>
+              <div class="contentCards">
+                <p>
+                  Income <br /><strong style="font-size: 4vw">$5000</strong>
+                </p>
+                <p></p>
               </div>
-            </article>
-          </section>
-    </div>
-      <div class="d-flex justify-content-between align-items-center mb-4">
+            </div>
+            <div class="containerExpense">
+              <div class="imageCash">
+                <img
+                  src="./assets/Expenses.svg"
+                  alt="Expenses"
+                  style="width: 8vw"
+                />
+              </div>
+              <div class="contentCards">
+                <p>
+                  Expenses <br /><strong style="font-size: 4vw">$5000</strong>
+                </p>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
+      <div class="d-flex justify-content-between align-items-center p-5">
         <h2>Recent Transactions</h2>
         <a href="create-expense.html" class="text-primary">See All</a>
       </div>
-      <div id="expenseList"></div>
+      <div id="expenseList" class="m-5 mt-1"></div>
     </main>
-
     <footer class="d-flex justify-content-center w-100 py-3">
       <div class="add-expense">
         <a href="./pages/create-expense.html"
@@ -78,7 +98,7 @@
         return;
       }
 
-      expenses.forEach((expense) => {
+      expenses.forEach((expense, index) => {
         const expenseItem = document.createElement("div");
         expenseItem.classList.add(
           "expense-item",
@@ -88,6 +108,7 @@
           "p-3",
           "mb-3"
         );
+        expenseItem.setAttribute("expense", index);
 
         expenseItem.innerHTML = `
                 <div class="d-flex align-items-center">
@@ -108,6 +129,7 @@
             `;
 
         expenseListContainer.appendChild(expenseItem);
+        addListenerNavigation(expenseItem);
       });
     });
 
@@ -132,6 +154,17 @@
         month: "2-digit",
         year: "2-digit",
       });
+    }
+
+    function addListenerNavigation(expenseItem) {
+      expenseItem.addEventListener("click", (ev) => {
+        const expenseIndex = event.target.getAttribute("expense");
+        navigateToDetailPage(expenseIndex);
+      });
+    }
+
+    function navigateToDetailPage(index) {
+      window.location.href = `./pages/detail-expense.html?expense=${index}`;
     }
   </script>
 </html>

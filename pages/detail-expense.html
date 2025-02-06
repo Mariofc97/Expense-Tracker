@@ -64,7 +64,6 @@
       let expense = {};
       if (expenses[index] !== undefined) {
         expense = expenses[index];
-        console.log("expense", expense);
         document.querySelector(".amount").innerHTML = `$${expense.amount}`;
         document.querySelector(".category").innerHTML = `${expense.category}`;
         document.querySelector(".date").innerHTML = `${expense.date}`;
