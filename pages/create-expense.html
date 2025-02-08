@@ -20,7 +20,6 @@
     <link href="../assets/fontawesome/css/solid.css" rel="stylesheet" />
     <link rel="stylesheet" href="../styles/main.css" />
     <link rel="stylesheet" href="../styles/nav.css" />
-    <link rel="stylesheet" href="../styles/create-expense.css" />
   </head>
   <body>
     <nav class="d-flex justify-content-between py-3 p-5">
@@ -30,8 +29,8 @@
       <span class="title">Create Expense</span>
       <div></div>
     </nav>
-    <main class="py-5 px-5">
-      <h1 class="mb-4">Create expense</h1>
+    <main class="container w-50 py-4">
+      <h1 class="mb-4">New expense</h1>
 
       <form id="expenseForm" method="POST">
         <div class="mb-3">
@@ -101,10 +100,20 @@
        */
       if (expenseStorage == null) {
         localStorage.setItem("expenses", JSON.stringify([data]));
+        addNewExpense();
       } else {
         const expenseList = JSON.parse(expenseStorage);
         expenseList.push(data);
         localStorage.setItem("expenses", JSON.stringify(expenseList));
+        addNewExpense();
+      }
+    };
+
+    const addNewExpense = () => {
+      if (window.confirm("Do you want to create another expense?")) {
+        document.querySelector("form").reset();
+      } else {
+        window.location.href = "../index.html";
       }
     };
 

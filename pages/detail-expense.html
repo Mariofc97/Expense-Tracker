@@ -50,9 +50,7 @@
             <span class="description"></span>
           </div>
           <div>
-            <a class="btn btn-primary btn-edit mt-3" href="edit-expense.html"
-              >Edit</a
-            >
+            <a class="btn btn-primary btn-edit-expense btn-edit mt-3">Edit</a>
           </div>
         </div>
       </div>
@@ -70,14 +68,27 @@
         document.querySelector(
           ".description"
         ).innerHTML = `${expense.description}`;
+      } else {
+        window.location.href = "../404.html";
       }
     };
 
-    const deleteExpense = (index) => {};
+    const deleteExpense = () => {
+      const expenses = JSON.parse(localStorage.getItem("expenses"));
+      expenses.splice(expenseIndex, 1);
+      localStorage.setItem("expenses", JSON.stringify(expenses));
+      window.location.href = "../index.html";
+    };
+
+    document
+      .querySelector(".btn-edit-expense")
+      .addEventListener("click", () => {
+        window.location.href = `./edit-expense.html?expense=${expenseIndex}`;
+      });
 
     document.querySelector(".fa-trash-can").addEventListener("click", () => {
       if (window.confirm("Do you really want to delete this expense?")) {
-        console.log("delete expense");
+        deleteExpense();
       }
     });
 
