@@ -166,5 +166,19 @@
     function navigateToDetailPage(index) {
       window.location.href = `./pages/detail-expense.html?expense=${index}`;
     }
+
+    document.addEventListener("DOMContentLoaded",()=>{
+      let amount = JSON.parse(localStorage.getItem("expenses"));
+      if(!amount) {
+        amount = [];
+      }
+
+      let totalAmount = 0;
+      for(let i = 0; i < amount.length; i++) {
+        totalAmount = totalAmount + Number(amount[i].amount);
+      }
+
+      document.querySelector(".containerExpense .contentCards strong").textContent = `$${totalAmount}`;
+    })
   </script>
 </html>
