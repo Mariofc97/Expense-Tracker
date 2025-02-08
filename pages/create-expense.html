@@ -100,21 +100,17 @@
        */
       if (expenseStorage == null) {
         localStorage.setItem("expenses", JSON.stringify([data]));
-        addNewExpense();
+        redirectToHomePage();
       } else {
         const expenseList = JSON.parse(expenseStorage);
         expenseList.push(data);
         localStorage.setItem("expenses", JSON.stringify(expenseList));
-        addNewExpense();
+        redirectToHomePage();
       }
     };
 
-    const addNewExpense = () => {
-      if (window.confirm("Do you want to create another expense?")) {
-        document.querySelector("form").reset();
-      } else {
-        window.location.href = "../index.html";
-      }
+    const redirectToHomePage = () => {
+      window.location.href = "../index.html";
     };
 
     const loadCategories = () => {

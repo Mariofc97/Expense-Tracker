@@ -2,6 +2,10 @@ body {
   background-color: #f9f9f9;
 }
 
+main {
+  padding-bottom: 50px;
+}
+
 .gradient-section {
   background: linear-gradient(
     to bottom,
@@ -54,8 +58,7 @@ footer {
   bottom: 0;
 }
 
-.add-expense {
-  background-color: var(--background-default);
+.option {
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -63,9 +66,28 @@ footer {
   position: relative;
 }
 
-.add-expense img {
+.option img {
   position: absolute;
-  padding: 14px;
+  padding: 12px;
+}
+
+.option.set-budget {
+  background-color: #0077ff;
+  justify-self: center;
+}
+
+.option.add-income {
+  background-color: #00a86b;
+}
+
+.option.add-expense {
+  background-color: #fd3c4a;
+}
+
+.option.open-options {
+  background-color: #7f3dff;
+  padding: 3px;
+  justify-self: center;
 }
 
 .expense-item {

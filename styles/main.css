@@ -6,6 +6,7 @@
 
 :root {
   --background-default: #fd3c4a;
+  --background-income: rgba(0, 168, 107, 1);
 }
 
 .btn-primary {

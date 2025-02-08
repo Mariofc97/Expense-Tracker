@@ -79,10 +79,27 @@
       <div id="expenseList" class="m-5 mt-1"></div>
     </main>
     <footer class="d-flex justify-content-center w-100 py-3">
-      <div class="add-expense">
-        <a href="./pages/create-expense.html"
-          ><img src="./assets/add.png" alt="Add Expense"
-        /></a>
+      <div>
+        <div class="option float-option set-budget d-none">
+          <a href="./pages/budget.html"
+            ><img src="./assets/budget.png" alt="Set Budget"
+          /></a>
+        </div>
+        <div class="d-inline-flex gap-5">
+          <div class="option float-option add-income d-none">
+            <a href="./pages/add-income.html"
+              ><img src="./assets/income.png" alt="Add Income"
+            /></a>
+          </div>
+          <div class="option float-option add-expense d-none">
+            <a href="./pages/create-expense.html"
+              ><img src="./assets/expense.png" alt="Add Expense"
+            /></a>
+          </div>
+        </div>
+        <div class="option open-options">
+          <img src="./assets/add.png" alt="Open Options" />
+        </div>
       </div>
     </footer>
   </body>
@@ -167,18 +184,37 @@
       window.location.href = `./pages/detail-expense.html?expense=${index}`;
     }
 
-    document.addEventListener("DOMContentLoaded",()=>{
+    document.addEventListener("DOMContentLoaded", () => {
       let amount = JSON.parse(localStorage.getItem("expenses"));
-      if(!amount) {
+      if (!amount) {
         amount = [];
       }
 
       let totalAmount = 0;
-      for(let i = 0; i < amount.length; i++) {
+      for (let i = 0; i < amount.length; i++) {
         totalAmount = totalAmount + Number(amount[i].amount);
       }
 
-      document.querySelector(".containerExpense .contentCards strong").textContent = `$${totalAmount}`;
-    })
+      document.querySelector(
+        ".containerExpense .contentCards strong"
+      ).textContent = `$${totalAmount}`;
+    });
+
+    let optionsOpened = false;
+    document.querySelector(".open-options").addEventListener("click", (ev) => {
+      optionsOpened = !optionsOpened;
+
+      // TO DO: change href to close button or open button icon
+      const element = ev.target;
+
+      const optionsElements = document.querySelectorAll(".float-option");
+      for (let element of optionsElements) {
+        if (optionsOpened) {
+          element.classList.remove("d-none");
+        } else {
+          element.classList.add("d-none");
+        }
+      }
+    });
   </script>
 </html>
