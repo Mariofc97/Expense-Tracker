@@ -101,7 +101,7 @@
     </div>
     <div class="d-flex justify-content-between align-items-center p-5">
       <h2>Recent Transactions</h2>
-      <a href="create-expense.html" class="text-primary">See All</a>
+      <a href="./pages/show-all-transactions.html" class="text-primary">See All</a>
     </div>
     <div id="expenseList" class="m-5 mt-1"></div>
   </main>
@@ -131,45 +131,41 @@
     const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 
     if (expenses.length === 0) {
-      expenseListContainer.innerHTML =
-        "<p class='text-muted'>No expenses recorded.</p>";
-      return;
+        expenseListContainer.innerHTML = "<p class='text-muted'>No expenses recorded.</p>";
+        return;
     }
+    const lastFiveExpenses = expenses.slice(-5).reverse(); 
 
-    expenses.forEach((expense, index) => {
-      const expenseItem = document.createElement("div");
-      expenseItem.classList.add(
-        "expense-item",
-        "d-flex",
-        "justify-content-between",
-        "align-items-center",
-        "p-3",
-        "mb-3"
-      );
-      expenseItem.setAttribute("expense", index);
+    lastFiveExpenses.forEach((expense, index) => {
+        const expenseItem = document.createElement("div");
+        expenseItem.classList.add(
+            "expense-item",
+            "d-flex",
+            "justify-content-between",
+            "align-items-center",
+            "p-3",
+            "mb-3"
+        );
 
-      expenseItem.innerHTML = `
-                <div class="d-flex align-items-center">
-                    <div class="icon-box ${expense.category.toLowerCase()}">
-                        ${getCategoryIcon(expense.category)}
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="mb-1">${capitalizeFirstLetter(
-        expense.category
-      )}</h6>
-                        <p class="text-muted small">${expense.description}</p>
-                    </div>
+        expenseItem.innerHTML = `
+            <div class="d-flex align-items-center">
+                <div class="icon-box ${expense.category.toLowerCase()}">
+                    ${getCategoryIcon(expense.category)}
                 </div>
-                <div class="text-end">
-                    <h6 class="text-danger">- $${expense.amount}</h6>
-                    <p class="text-muted small">${formatDate(expense.date)}</p>
+                <div class="ms-3">
+                    <h6 class="mb-1">${capitalizeFirstLetter(expense.category)}</h6>
+                    <p class="text-muted small">${expense.description}</p>
                 </div>
-            `;
+            </div>
+            <div class="text-end">
+                <h6 class="text-danger">- $${expense.amount}</h6>
+                <p class="text-muted small">${formatDate(expense.date)}</p>
+            </div>
+        `;
 
-      expenseListContainer.appendChild(expenseItem);
-      addListenerNavigation(expenseItem);
+        expenseListContainer.appendChild(expenseItem);
     });
-  });
+});
 
   function getCategoryIcon(category) {
     const icons = {
