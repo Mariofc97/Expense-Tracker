@@ -10,5 +10,13 @@
   {
     "description": "Entertainment",
     "value": "entertainment"
+  },
+  {
+    "description": "Subscription",
+    "value": "subscription"
+  },
+  {
+    "description": "Shopping",
+    "value": "shopping"
   }
 ]

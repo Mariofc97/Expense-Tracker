@@ -64,9 +64,9 @@
   <script>
     const getExpense = (index) => {
       const expenses = JSON.parse(localStorage.getItem("expenses"));
-      let expense = {};
-      if (expenses[index] !== undefined) {
-        expense = expenses[index];
+      let expense = expenses[index];
+
+      if (expense !== undefined) {
         document.querySelector(".amount").innerHTML = `$${expense.amount}`;
         document.querySelector(".category").innerHTML = `${expense.category}`;
         document.querySelector(".date").innerHTML = `${expense.date}`;
