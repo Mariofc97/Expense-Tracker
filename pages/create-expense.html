@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="../styles/nav.css" />
   </head>
   <body>
-    <nav class="d-flex justify-content-between py-3 p-5">
+    <nav class="d-flex justify-content-between nav-expense py-3 p-5">
       <a href="../index.html">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
@@ -40,6 +40,7 @@
             name="amount"
             class="form-control"
             id="amount"
+            min="1"
             required
           />
         </div>
@@ -72,7 +73,7 @@
           ></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary btn-expense">Save</button>
       </form>
     </main>
   </body>

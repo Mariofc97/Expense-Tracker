@@ -5,24 +5,49 @@
 }
 
 :root {
-  --background-default: #fd3c4a;
-  --background-income: rgba(0, 168, 107, 1);
+  --background-expense: #fd3c4a;
+  --background-budget: #0077ff;
+  --background-income: #00a86b;
 }
 
 .btn-primary {
   width: 150px;
   height: 45px;
-  background-color: var(--background-default);
   border: none;
 }
 
 .btn-primary:hover {
   background-color: #fcfcfc;
-  border: 1px solid var(--background-default);
-  color: var(--background-default);
 }
 
 .btn-primary:active {
   background-color: var(--background-default) !important;
   border: 1px solid var(--background-default);
+}
+
+.btn-budget {
+  background-color: var(--background-budget);
+}
+
+.btn-budget:hover {
+  border: 1px solid var(--background-budget);
+  color: var(--background-budget);
+}
+
+.btn-expense {
+  background-color: var(--background-expense);
+}
+
+.btn-expense:hover {
+  border: 1px solid var(--background-expense);
+  color: var(--background-expense);
+}
+
+.btn-income {
+  background-color: var(--background-income);
+}
+
+.btn-income:hover {
+  border: 1px solid var(--background-income);
+  color: var(--background-income);
 }
