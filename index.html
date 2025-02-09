@@ -1,157 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"
-      integrity="sha512-7H/XbvOmUsf6mawBvmmx9BsPt9ew2NTwQ3QDSzNe6iyacDbCJU+7pBbZY1NdmTpuj7snxSsXasMYMiR2tv906g=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-    <link href="./assets/fontawesome/css/fontawesome.css" rel="stylesheet" />
-    <link href="./assets/fontawesome/css/brands.css" rel="stylesheet" />
-    <link href="./assets/fontawesome/css/solid.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles/main.css" />
-    <link rel="stylesheet" href="./styles/dashboard.css" />
-  </head>
-  <body>
-    <header>
-      <nav class="d-flex justify-content-between align-items-center p-5">
-        <i class="fa-solid fa-user fa-2xl" style="color: #7f3dff"></i>
-        <select name="select-month" id="select-month" class="form-select w-auto text-center"
-        style="border-radius: 40px; border: 2px solid #7f3dff;">
-          <option value="01">January</option>
-          <option value="02">February</option>
-          <option value="03">March</option>
-          <option value="04">April</option>
-          <option value="05">May</option>
-          <option value="06">June</option>
-          <option value="07">July</option>
-          <option value="08">Auguts</option>
-          <option value="09">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
 
-        </select>
-        <i class="fa-solid fa-bell fa-2xl" style="color: #7f3dff"></i>
-      </nav>
-    </header>
-    <main>
-      <div class="container">
-        <section id="accountBalance">
-          <p style="color: gray; text-align: center">Account Balance</p>
-          <h1 style="text-align: center; font-size: 5vw">$9400</h1>
-          <article class="incomeExpenses">
-            <div class="containerIncome">
-              <div class="imageCash">
-                <img
-                  src="./assets/Income.svg"
-                  alt="Income"
-                  style="width: 8vw"
-                />
-              </div>
-              <div class="contentCards">
-                <p>
-                  Income <br /><strong style="font-size: 4vw">$5000</strong>
-                </p>
-                <p></p>
-              </div>
-            </div>
-            <div class="containerExpense">
-              <div class="imageCash">
-                <img
-                  src="./assets/Expenses.svg"
-                  alt="Expenses"
-                  style="width: 8vw"
-                />
-              </div>
-              <div class="contentCards">
-                <p>
-                  Expenses <br /><strong style="font-size: 4vw">$5000</strong>
-                </p>
-              </div>
-            </div>
-          </article>
-        </section>
-      </div>
-      <div class="d-flex justify-content-between align-items-center p-5">
-        <h2>Recent Transactions</h2>
-        <a href="create-expense.html" class="text-primary">See All</a>
-      </div>
-      <div id="expenseList" class="m-5 mt-1"></div>
-    </main>
-    <footer class="d-flex justify-content-center w-100 py-3">
-      <div>
-        <div class="option float-option set-budget d-none">
-          <a href="./pages/budget.html"
-            ><img src="./assets/budget.png" alt="Set Budget"
-          /></a>
-        </div>
-        <div class="d-inline-flex gap-5">
-          <div class="option float-option add-income d-none">
-            <a href="./pages/add-income.html"
-              ><img src="./assets/income.png" alt="Add Income"
-            /></a>
-          </div>
-          <div class="option float-option add-expense d-none">
-            <a href="./pages/create-expense.html"
-              ><img src="./assets/expense.png" alt="Add Expense"
-            /></a>
-          </div>
-        </div>
-        <div class="option open-options">
-          <img src="./assets/add.png" alt="Open Options" />
-        </div>
-      </div>
-    </footer>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"
+    integrity="sha512-7H/XbvOmUsf6mawBvmmx9BsPt9ew2NTwQ3QDSzNe6iyacDbCJU+7pBbZY1NdmTpuj7snxSsXasMYMiR2tv906g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <link href="./assets/fontawesome/css/fontawesome.css" rel="stylesheet" />
+  <link href="./assets/fontawesome/css/brands.css" rel="stylesheet" />
+  <link href="./assets/fontawesome/css/solid.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/main.css" />
+  <link rel="stylesheet" href="./styles/dashboard.css" />
+  <style>
+    .chart {
+      width: 100%;
+      height: 400px;
+    }
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const expenseListContainer = document.getElementById("expenseList");
-      const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-
-      if (expenses.length === 0) {
-        expenseListContainer.innerHTML =
-          "<p class='text-muted'>No expenses recorded.</p>";
-        return;
+    @media (max-width: 768px) {
+      .chart {
+        height: 300px;
       }
 
-      expenses.forEach((expense, index) => {
-        const expenseItem = document.createElement("div");
-        expenseItem.classList.add(
-          "expense-item",
-          "d-flex",
-          "justify-content-between",
-          "align-items-center",
-          "p-3",
-          "mb-3"
-        );
-        expenseItem.setAttribute("expense", index);
+      #chartsContainer {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
 
-        expenseItem.innerHTML = `
+<body>
+  <header>
+    <nav class="d-flex justify-content-between align-items-center p-5">
+      <i class="fa-solid fa-user fa-2xl" style="color: #7f3dff"></i>
+      <select name="select-month" id="select-month" class="form-select w-auto text-center"
+        style="border-radius: 40px; border: 2px solid #7f3dff;">
+        <option value="01">January</option>
+        <option value="02">February</option>
+        <option value="03">March</option>
+        <option value="04">April</option>
+        <option value="05">May</option>
+        <option value="06">June</option>
+        <option value="07">July</option>
+        <option value="08">Auguts</option>
+        <option value="09">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+
+      </select>
+      <i class="fa-solid fa-bell fa-2xl" style="color: #7f3dff"></i>
+    </nav>
+  </header>
+  <main>
+    <div class="container">
+      <section id="accountBalance">
+        <p style="color: gray; text-align: center">Account Balance</p>
+        <h1 style="text-align: center; font-size: 5vw">$9400</h1>
+        <article class="incomeExpenses">
+          <div class="containerIncome">
+            <div class="imageCash">
+              <img src="./assets/Income.svg" alt="Income" style="width: 8vw" />
+            </div>
+            <div class="contentCards">
+              <p>
+                Income <br /><strong style="font-size: 4vw">$5000</strong>
+              </p>
+              <p></p>
+            </div>
+          </div>
+          <div class="containerExpense">
+            <div class="imageCash">
+              <img src="./assets/Expenses.svg" alt="Expenses" style="width: 8vw" />
+            </div>
+            <div class="contentCards">
+              <p>
+                Expenses <br /><strong style="font-size: 4vw">$5000</strong>
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <div class="container">
+      <h2 class="text-center mt-4">Expense Analytics</h2>
+      <br>
+      <div id="chartsContainer">
+        <div id="pieChart" style="width: 100%; height: 400px;"></div>
+        <br><br><br>
+        <div id="barGraph" style="width: 100%; height: 400px;"></div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center p-5">
+      <h2>Recent Transactions</h2>
+      <a href="create-expense.html" class="text-primary">See All</a>
+    </div>
+    <div id="expenseList" class="m-5 mt-1"></div>
+  </main>
+  <footer class="d-flex justify-content-center w-100 py-3">
+    <div>
+      <div class="option float-option set-budget d-none">
+        <a href="./pages/budget.html"><img src="./assets/budget.png" alt="Set Budget" /></a>
+      </div>
+      <div class="d-inline-flex gap-5">
+        <div class="option float-option add-income d-none">
+          <a href="./pages/add-income.html"><img src="./assets/income.png" alt="Add Income" /></a>
+        </div>
+        <div class="option float-option add-expense d-none">
+          <a href="./pages/create-expense.html"><img src="./assets/expense.png" alt="Add Expense" /></a>
+        </div>
+      </div>
+      <div class="option open-options">
+        <img src="./assets/add.png" alt="Open Options" />
+      </div>
+    </div>
+  </footer>
+</body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const expenseListContainer = document.getElementById("expenseList");
+    const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+    if (expenses.length === 0) {
+      expenseListContainer.innerHTML =
+        "<p class='text-muted'>No expenses recorded.</p>";
+      return;
+    }
+
+    expenses.forEach((expense, index) => {
+      const expenseItem = document.createElement("div");
+      expenseItem.classList.add(
+        "expense-item",
+        "d-flex",
+        "justify-content-between",
+        "align-items-center",
+        "p-3",
+        "mb-3"
+      );
+      expenseItem.setAttribute("expense", index);
+
+      expenseItem.innerHTML = `
                 <div class="d-flex align-items-center">
                     <div class="icon-box ${expense.category.toLowerCase()}">
                         ${getCategoryIcon(expense.category)}
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-1">${capitalizeFirstLetter(
-                          expense.category
-                        )}</h6>
+        expense.category
+      )}</h6>
                         <p class="text-muted small">${expense.description}</p>
                     </div>
                 </div>
@@ -161,76 +166,151 @@
                 </div>
             `;
 
-        expenseListContainer.appendChild(expenseItem);
-        addListenerNavigation(expenseItem);
+      expenseListContainer.appendChild(expenseItem);
+      addListenerNavigation(expenseItem);
+    });
+  });
+
+  function getCategoryIcon(category) {
+    const icons = {
+      shopping: "🛍️",
+      food: "🍽️",
+      subscription: "📄",
+      transportation: "🚗",
+    };
+    return icons[category.toLowerCase()] || "💰";
+  }
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString([], {
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit",
+    });
+  }
+
+  function addListenerNavigation(expenseItem) {
+    expenseItem.addEventListener("click", (ev) => {
+      const expenseIndex = event.target.getAttribute("expense");
+      navigateToDetailPage(expenseIndex);
+    });
+  }
+
+  function navigateToDetailPage(index) {
+    window.location.href = `./pages/detail-expense.html?expense=${index}`;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    let amount = JSON.parse(localStorage.getItem("expenses"));
+    if (!amount) {
+      amount = [];
+    }
+
+    let totalAmount = 0;
+    for (let i = 0; i < amount.length; i++) {
+      totalAmount = totalAmount + Number(amount[i].amount);
+    }
+
+    document.querySelector(
+      ".containerExpense .contentCards strong"
+    ).textContent = `$${totalAmount}`;
+  });
+
+  let optionsOpened = false;
+  document.querySelector(".open-options").addEventListener("click", (ev) => {
+    optionsOpened = !optionsOpened;
+
+    const element = ev.target;
+
+    const optionsElements = document.querySelectorAll(".float-option");
+    for (let element of optionsElements) {
+      if (optionsOpened) {
+        element.classList.remove("d-none");
+      } else {
+        element.classList.add("d-none");
+      }
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+    if (expenses.length === 0) {
+      document.getElementById("chartsContainer").innerHTML =
+        "<p class='text-muted text-center'>No expenses recorded.</p>";
+      return;
+    }
+
+    const categoryTotals = {};
+    const monthlyTotals = {};
+
+    expenses.forEach(({ category, amount, date }) => {
+      const monthYear = new Date(date).toLocaleString("en-US", {
+        month: "short",
+        year: "numeric",
       });
+
+      if (!categoryTotals[category]) categoryTotals[category] = 0;
+      categoryTotals[category] += Number(amount);
+
+      if (!monthlyTotals[monthYear]) monthlyTotals[monthYear] = 0;
+      monthlyTotals[monthYear] += Number(amount);
     });
 
-    function getCategoryIcon(category) {
-      const icons = {
-        shopping: "🛍️",
-        food: "🍽️",
-        subscription: "📄",
-        transportation: "🚗",
-      };
-      return icons[category.toLowerCase()] || "💰";
-    }
+    const layout = {
+      title: { text: "", font: { size: 18 } },
+      margin: { l: 40, r: 40, t: 50, b: 50 },
+      responsive: true,
+    };
 
-    function capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    Plotly.newPlot(
+      "pieChart",
+      [
+        {
+          labels: Object.keys(categoryTotals),
+          values: Object.values(categoryTotals),
+          type: "pie",
+        },
 
-    function formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleTimeString([], {
-        day: "2-digit",
-        month: "2-digit",
-        year: "2-digit",
-      });
-    }
+      ],
+      { ...layout, title: "Expense Distribution by Category" },
+      { displayModeBar: false }
+    );
 
-    function addListenerNavigation(expenseItem) {
-      expenseItem.addEventListener("click", (ev) => {
-        const expenseIndex = event.target.getAttribute("expense");
-        navigateToDetailPage(expenseIndex);
-      });
-    }
+    const sortedMonths = Object.keys(monthlyTotals).sort(
+      (a, b) => new Date(a) - new Date(b)
+    );
 
-    function navigateToDetailPage(index) {
-      window.location.href = `./pages/detail-expense.html?expense=${index}`;
-    }
+    Plotly.newPlot(
+      "barGraph",
+      [
+        {
+          x: sortedMonths,
+          y: sortedMonths.map((month) => monthlyTotals[month]),
+          type: "bar",
+          marker: { color: "rgb(127, 61, 255)" },
+        },
 
-    document.addEventListener("DOMContentLoaded", () => {
-      let amount = JSON.parse(localStorage.getItem("expenses"));
-      if (!amount) {
-        amount = [];
-      }
+      ],
+      {
+        ...layout,
+        title: "Monthly Expenses",
+        xaxis: { title: "Month" },
+        yaxis: { title: "Total Amount ($)" },
+      },
+      { displayModeBar: false }
+    );
 
-      let totalAmount = 0;
-      for (let i = 0; i < amount.length; i++) {
-        totalAmount = totalAmount + Number(amount[i].amount);
-      }
-
-      document.querySelector(
-        ".containerExpense .contentCards strong"
-      ).textContent = `$${totalAmount}`;
+    window.addEventListener("resize", () => {
+      Plotly.relayout("pieChart", { width: "100%", height: "100%" });
+      Plotly.relayout("barGraph", { width: "100%", height: "100%" });
     });
+  });
+</script>
 
-    let optionsOpened = false;
-    document.querySelector(".open-options").addEventListener("click", (ev) => {
-      optionsOpened = !optionsOpened;
-
-      // TO DO: change href to close button or open button icon
-      const element = ev.target;
-
-      const optionsElements = document.querySelectorAll(".float-option");
-      for (let element of optionsElements) {
-        if (optionsOpened) {
-          element.classList.remove("d-none");
-        } else {
-          element.classList.add("d-none");
-        }
-      }
-    });
-  </script>
 </html>
