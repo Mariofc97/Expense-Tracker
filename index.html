@@ -45,69 +45,71 @@
   </head>
 
   <body>
-    <header>
-      <nav class="d-flex justify-content-between align-items-center p-5">
-        <i class="fa-solid fa-user fa-2xl" style="color: #7f3dff"></i>
-        <select
-          name="select-month"
-          id="select-month"
-          class="form-select w-auto text-center"
-          style="border-radius: 40px; border: 2px solid #7f3dff"
-        >
-          <option value="">All months</option>
-          <option value="01">January</option>
-          <option value="02">February</option>
-          <option value="03">March</option>
-          <option value="04">April</option>
-          <option value="05">May</option>
-          <option value="06">June</option>
-          <option value="07">July</option>
-          <option value="08">Auguts</option>
-          <option value="09">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
-        </select>
-        <i class="fa-solid fa-bell fa-2xl" style="color: #7f3dff"></i>
-      </nav>
-    </header>
-    <main>
-      <div class="container">
-        <section id="accountBalance">
-          <p style="color: gray; text-align: center">Account Balance</p>
-          <h1 style="text-align: center; font-size: 5vw" class="totalAccountBalance">$</h1>
-          <article class="incomeExpenses">
-            <div class="containerIncome">
-              <div class="imageCash">
-                <img
-                  src="./assets/Income.svg"
-                  alt="Income"
-                  style="width: 8vw"
-                />
+    <div class="gradient-section">
+      <header>
+        <nav class="d-flex justify-content-between align-items-center p-5">
+          <i class="fa-solid fa-user fa-2xl" style="color: #7f3dff"></i>
+          <select
+            name="select-month"
+            id="select-month"
+            class="form-select w-auto text-center"
+            style="border-radius: 40px; border: 2px solid #7f3dff"
+          >
+            <option value="">All months</option>
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">Auguts</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+          <i class="fa-solid fa-bell fa-2xl" style="color: #7f3dff"></i>
+        </nav>
+      </header>
+      <main>
+        <div class="container">
+          <section id="accountBalance">
+            <p style="color: gray; text-align: center">Account Balance</p>
+            <h1 style="text-align: center; font-size: 5vw" class="totalAccountBalance">$</h1>
+            <article class="incomeExpenses">
+              <div class="containerIncome">
+                <div class="imageCash">
+                  <img
+                    src="./assets/Income.svg"
+                    alt="Income"
+                    style="width: 6vw"
+                  />
+                </div>
+                <div class="contentCards" style="font-size: 1.5vw;">
+                  <p>
+                    Income <br /><strong style="font-size: 3vw">$</strong>
+                  </p>
+                  <p></p>
+                </div>
               </div>
-              <div class="contentCards">
-                <p>
-                  Income <br /><strong style="font-size: 4vw">$5000</strong>
-                </p>
-                <p></p>
+              <div class="containerExpense">
+                <div class="imageCash">
+                  <img
+                    src="./assets/Expenses.svg"
+                    alt="Expenses"
+                    style="width: 6vw"
+                  />
+                </div>
+                <div class="contentCards" style="font-size: 1.5vw;">
+                  <p>
+                    Expenses <br /><strong style="font-size: 3vw">$5</strong>
+                  </p>
+                </div>
               </div>
-            </div>
-            <div class="containerExpense">
-              <div class="imageCash">
-                <img
-                  src="./assets/Expenses.svg"
-                  alt="Expenses"
-                  style="width: 8vw"
-                />
-              </div>
-              <div class="contentCards">
-                <p>
-                  Expenses <br /><strong style="font-size: 4vw">$5000</strong>
-                </p>
-              </div>
-            </div>
-          </article>
-        </section>
+            </article>
+          </section>
+        </div>
       </div>
 
       <div class="container">
