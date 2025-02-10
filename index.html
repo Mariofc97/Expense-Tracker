@@ -75,7 +75,7 @@
       <div class="container">
         <section id="accountBalance">
           <p style="color: gray; text-align: center">Account Balance</p>
-          <h1 style="text-align: center; font-size: 5vw">$9400</h1>
+          <h1 style="text-align: center; font-size: 5vw" class="totalAccountBalance">$</h1>
           <article class="incomeExpenses">
             <div class="containerIncome">
               <div class="imageCash">
@@ -261,6 +261,19 @@
       document.querySelector(
         ".containerExpense .contentCards strong"
       ).textContent = `$${totalAmount}`;
+
+      let income = JSON.parse(localStorage.getItem("income"));
+      if (!income) {
+        income = 0;
+      }
+
+      let totalIncome = Number(income);
+
+      document.querySelector(".containerIncome .contentCards strong").textContent = `$${totalIncome}`;
+
+      let totalAccountBalance = totalIncome - totalAmount;
+      
+      document.querySelector(".totalAccountBalance").textContent = `$${totalAccountBalance}`;
     });
 
     let optionsOpened = false;
