@@ -62,9 +62,10 @@
     </main>
   </body>
   <script>
-    const getExpense = (index) => {
+    const getExpense = (expenseId) => {
       const expenses = JSON.parse(localStorage.getItem("expenses"));
-      let expense = expenses[index];
+
+      let expense = expenses.find((expense) => expense.id === expenseId);
 
       if (expense !== undefined) {
         document.querySelector(".amount").innerHTML = `$${expense.amount}`;
@@ -73,22 +74,36 @@
         document.querySelector(
           ".description"
         ).innerHTML = `${expense.description}`;
-      } else {
-        window.location.href = "../404.html";
       }
     };
 
+    /**
+     * Delete expense into local storage by id.
+     */
     const deleteExpense = () => {
-      const expenses = JSON.parse(localStorage.getItem("expenses"));
-      expenses.splice(expenseIndex, 1);
-      localStorage.setItem("expenses", JSON.stringify(expenses));
-      window.location.href = "../index.html";
+      let expenses = JSON.parse(localStorage.getItem("expenses"));
+
+      const expenseIndex = expenses.findIndex(
+        (expense) => expense.id === expenseId
+      );
+
+      if (expenseIndex !== -1) {
+        expenses.splice(expenseIndex, 1);
+        if (expenses.length > 0) {
+          localStorage.setItem("expenses", JSON.stringify(expenses));
+        } else {
+          localStorage.removeItem("expenses");
+        }
+        window.location.href = "../index.html";
+      } else {
+        alert("Error to delete expense");
+      }
     };
 
     document
       .querySelector(".btn-edit-expense")
       .addEventListener("click", () => {
-        window.location.href = `./edit-expense.html?expense=${expenseIndex}`;
+        window.location.href = `./edit-expense.html?expense=${expenseId}`;
       });
 
     document.querySelector(".fa-trash-can").addEventListener("click", () => {
@@ -97,8 +112,10 @@
       }
     });
 
-    const params = new URLSearchParams(window.location.search);
-    const expenseIndex = params.get("expense");
-    getExpense(expenseIndex);
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      window.expenseId = params.get("expense");
+      getExpense(expenseId);
+    });
   </script>
 </html>

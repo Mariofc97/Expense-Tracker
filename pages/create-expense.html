@@ -40,7 +40,8 @@
             name="amount"
             class="form-control"
             id="amount"
-            min="1"
+            min="0.01"
+            step="0.01"
             required
           />
         </div>
@@ -48,7 +49,7 @@
         <div class="mb-3">
           <label for="category" class="form-label">Category</label>
           <select id="category" name="category" class="form-select" required>
-            <option selected>Choose a category...</option>
+            <option value="" selected>Choose a category...</option>
           </select>
         </div>
 
@@ -81,8 +82,12 @@
     document.querySelector("form").addEventListener("submit", (event) => {
       event.preventDefault();
 
+      /**
+       * Retrieve form data and create a random id to the new expense.
+       */
       const formData = new FormData(event.target);
-      const formObject = Object.fromEntries(formData.entries());
+      let formObject = Object.fromEntries(formData.entries());
+      formObject["id"] = crypto.randomUUID();
 
       saveInStorage(formObject);
     });
@@ -91,7 +96,7 @@
      * Save data form in local storage each time has created a new expense.
      */
     const saveInStorage = (data) => {
-      const expenseStorage = localStorage.getItem("expenses");
+      const expenses = localStorage.getItem("expenses");
 
       /**
        * If it is the first time creating an expense, then save into local storage
@@ -99,11 +104,11 @@
        * Else, retrieve previous expenses, push the new expense into array of expenses
        * and save again using the same key.
        */
-      if (expenseStorage == null) {
+      if (expenses == null) {
         localStorage.setItem("expenses", JSON.stringify([data]));
         redirectToHomePage();
       } else {
-        const expenseList = JSON.parse(expenseStorage);
+        const expenseList = JSON.parse(expenses);
         expenseList.push(data);
         localStorage.setItem("expenses", JSON.stringify(expenseList));
         redirectToHomePage();
