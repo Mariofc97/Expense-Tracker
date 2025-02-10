@@ -41,7 +41,7 @@
           return;
         }
 
-        expenses.reverse().forEach((expense, index) => {
+        expenses.reverse().forEach((expense) => {
           const expenseItem = document.createElement("div");
           expenseItem.classList.add(
             "expense-item",
@@ -52,7 +52,7 @@
             "mb-3"
           );
 
-          expenseItem.setAttribute("expense", index);
+          expenseItem.setAttribute("expense", expense.id);
 
           expenseItem.innerHTML = `
                     <div class="d-flex align-items-center">
@@ -106,14 +106,14 @@
       }
 
       function addListenerNavigation(expenseItem) {
-        expenseItem.addEventListener("click", (ev) => {
-          const expenseIndex = event.target.getAttribute("expense");
-          navigateToDetailPage(expenseIndex);
+        expenseItem.addEventListener("click", () => {
+          const expense = event.target.getAttribute("expense");
+          navigateToDetailPage(expense);
         });
       }
 
-      function navigateToDetailPage(index) {
-        window.location.href = `../pages/detail-expense.html?expense=${index}`;
+      function navigateToDetailPage(expense) {
+        window.location.href = `../pages/detail-expense.html?expense=${expense}`;
       }
     </script>
   </body>

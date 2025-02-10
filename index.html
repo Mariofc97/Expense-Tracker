@@ -26,89 +26,71 @@
     <link href="./assets/fontawesome/css/solid.css" rel="stylesheet" />
     <link rel="stylesheet" href="./styles/main.css" />
     <link rel="stylesheet" href="./styles/dashboard.css" />
-    <style>
-      .chart {
-        width: 100%;
-        height: 400px;
-      }
-
-      @media (max-width: 768px) {
-        .chart {
-          height: 300px;
-        }
-
-        #chartsContainer {
-          flex-direction: column;
-        }
-      }
-    </style>
   </head>
-
   <body>
-      <header class="gradient-section">
-        <nav class="d-flex justify-content-between align-items-center p-5">
-          <i class="fa-solid fa-user fa-2xl" style="color: #7f3dff"></i>
-          <select
-            name="select-month"
-            id="select-month"
-            class="form-select w-auto text-center"
-            style="border-radius: 40px; border: 2px solid #7f3dff"
-          >
-            <option value="">All months</option>
-            <option value="01">January</option>
-            <option value="02">February</option>
-            <option value="03">March</option>
-            <option value="04">April</option>
-            <option value="05">May</option>
-            <option value="06">June</option>
-            <option value="07">July</option>
-            <option value="08">Auguts</option>
-            <option value="09">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-          </select>
-          <i class="fa-solid fa-bell fa-2xl" style="color: #7f3dff"></i>
-        </nav>
-      </header>
-      <main>
-        <div class="container">
-          <section id="accountBalance">
-            <p style="color: gray; text-align: center">Account Balance</p>
-            <h1 style="text-align: center; font-size: 5vw" class="totalAccountBalance">$</h1>
-            <article class="incomeExpenses">
-              <div class="containerIncome">
-                <div class="imageCash">
-                  <img
-                    src="./assets/Income.svg"
-                    alt="Income"
-                    style="width: 6vw"
-                  />
-                </div>
-                <div class="contentCards" style="font-size: 1.5vw;">
-                  <p>
-                    Income <br /><strong style="font-size: 3vw">$</strong>
-                  </p>
-                  <p></p>
-                </div>
+    <header class="gradient-section">
+      <nav class="d-flex justify-content-between align-items-center p-5">
+        <i class="fa-solid fa-user fa-2xl" style="color: #7f3dff"></i>
+        <select
+          name="select-month"
+          id="select-month"
+          class="form-select w-auto text-center"
+          style="border-radius: 40px; border: 2px solid #7f3dff"
+        >
+          <option value="">All months</option>
+          <option value="01">January</option>
+          <option value="02">February</option>
+          <option value="03">March</option>
+          <option value="04">April</option>
+          <option value="05">May</option>
+          <option value="06">June</option>
+          <option value="07">July</option>
+          <option value="08">Auguts</option>
+          <option value="09">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+        <i class="fa-solid fa-bell fa-2xl" style="color: #7f3dff"></i>
+      </nav>
+    </header>
+    <main>
+      <div class="container">
+        <section id="accountBalance">
+          <p style="color: gray; text-align: center">Account Balance</p>
+          <h1
+            style="text-align: center; font-size: 5vw"
+            class="totalAccountBalance"
+          ></h1>
+          <article class="incomeExpenses">
+            <div class="containerIncome">
+              <div class="imageCash">
+                <img
+                  src="./assets/Income.svg"
+                  alt="Income"
+                  style="width: 6vw"
+                />
               </div>
-              <div class="containerExpense">
-                <div class="imageCash">
-                  <img
-                    src="./assets/Expenses.svg"
-                    alt="Expenses"
-                    style="width: 6vw"
-                  />
-                </div>
-                <div class="contentCards" style="font-size: 1.5vw;">
-                  <p>
-                    Expenses <br /><strong style="font-size: 3vw">$</strong>
-                  </p>
-                </div>
+              <div class="contentCards" style="font-size: 1.5vw">
+                <p>Income <br /><strong style="font-size: 3vw">$</strong></p>
+                <p></p>
               </div>
-            </article>
-          </section>
-        </div>
+            </div>
+            <div class="containerExpense">
+              <div class="imageCash">
+                <img
+                  src="./assets/Expenses.svg"
+                  alt="Expenses"
+                  style="width: 6vw"
+                />
+              </div>
+              <div class="contentCards" style="font-size: 1.5vw">
+                <p>Expenses <br /><strong style="font-size: 3vw">$5</strong></p>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
 
       <div class="container">
         <h2 class="text-center mt-4">Expense Analytics</h2>
@@ -165,7 +147,7 @@
       }
       const lastFiveExpenses = expenses.slice(-5).reverse();
 
-      lastFiveExpenses.forEach((expense, index) => {
+      lastFiveExpenses.forEach((expense) => {
         const expenseItem = document.createElement("div");
         expenseItem.classList.add(
           "expense-item",
@@ -176,7 +158,7 @@
           "mb-3"
         );
 
-        expenseItem.setAttribute("expense", index);
+        expenseItem.setAttribute("expense", expense.id);
 
         expenseItem.innerHTML = `
             <div class="d-flex align-items-center">
@@ -226,25 +208,14 @@
     }
 
     function addListenerNavigation(expenseItem) {
-      expenseItem.addEventListener("click", (ev) => {
-        const expenseIndex = event.target.getAttribute("expense");
-        navigateToDetailPage(expenseIndex);
+      expenseItem.addEventListener("click", () => {
+        const expense = event.target.getAttribute("expense");
+        navigateToDetailPage(expense);
       });
     }
 
-    function navigateToDetailPage(index) {
-      window.location.href = `./pages/detail-expense.html?expense=${index}`;
-    }
-
-    function addListenerNavigation(expenseItem) {
-      expenseItem.addEventListener("click", (ev) => {
-        const expenseIndex = event.target.getAttribute("expense");
-        navigateToDetailPage(expenseIndex);
-      });
-    }
-
-    function navigateToDetailPage(index) {
-      window.location.href = `./pages/detail-expense.html?expense=${index}`;
+    function navigateToDetailPage(expense) {
+      window.location.href = `./pages/detail-expense.html?expense=${expense}`;
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -269,11 +240,15 @@
 
       let totalIncome = Number(income);
 
-      document.querySelector(".containerIncome .contentCards strong").textContent = `$${totalIncome}`;
+      document.querySelector(
+        ".containerIncome .contentCards strong"
+      ).textContent = `$${totalIncome}`;
 
       let totalAccountBalance = totalIncome - totalAmount;
-      
-      document.querySelector(".totalAccountBalance").textContent = `$${totalAccountBalance}`;
+
+      document.querySelector(
+        ".totalAccountBalance"
+      ).textContent = `$${totalAccountBalance.toFixed(2)}`;
     });
 
     let optionsOpened = false;

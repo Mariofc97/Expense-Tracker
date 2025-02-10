@@ -54,6 +54,21 @@ main {
   justify-content: center;
 }
 
+.chart {
+  width: 100%;
+  height: 400px;
+}
+
+@media (max-width: 768px) {
+  .chart {
+    height: 300px;
+  }
+
+  #chartsContainer {
+    flex-direction: column;
+  }
+}
+
 footer {
   position: fixed;
   bottom: 0;
