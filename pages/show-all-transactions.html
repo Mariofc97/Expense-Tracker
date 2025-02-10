@@ -83,10 +83,11 @@
 
       function getCategoryIcon(category) {
         const icons = {
-          shopping: "🛍️",
-          food: "🍽️",
-          subscription: "📄",
-          transportation: "🚗",
+          shopping: "<i class='fa-solid fa-cart-shopping'></i>",
+          food: "<i class='fa-solid fa-utensils'></i>",
+          subscription: "<i class='fa-solid fa-dollar-sign'></i>",
+          entertainment: "<i class='fa-solid fa-face-smile'></i>",
+          transportation: "<i class='fa-solid fa-car'></i>",
         };
         return icons[category.toLowerCase()] || "💰";
       }
