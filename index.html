@@ -298,13 +298,37 @@
         responsive: true,
       };
 
+      const categoryColours = {
+        food: "#ff7043",
+        shopping:"#ffc107",
+        entertainment: "#fd3c4a",
+        subscription: "#7e57c2",
+        transportation: "#03a9f4"
+      };
+
+      const labels = Object.keys(categoryTotals);
+      const colours = [];
+
+      for (let i = 0; i < labels.length; i++){
+        const category= labels[i];
+        let colour;
+
+        if(categoryColours[category]) {
+          colour= categoryColours[category];
+        }
+        colours.push(colour);
+      }
+
       Plotly.newPlot(
         "pieChart",
         [
           {
-            labels: Object.keys(categoryTotals),
+            labels: labels,
             values: Object.values(categoryTotals),
             type: "pie",
+            marker: {
+              colors: colours
+            }
           },
         ],
         { ...layout, title: "Expense Distribution by Category" },
