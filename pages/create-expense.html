@@ -95,8 +95,8 @@
     /**
      * Save data form in local storage each time has created a new expense.
      */
-    const saveInStorage = (data) => {
-      const expenses = localStorage.getItem("expenses");
+    const saveInStorage = (dataForm) => {
+      const expenses = JSON.parse(localStorage.getItem("expenses"));
 
       /**
        * If it is the first time creating an expense, then save into local storage
@@ -105,14 +105,63 @@
        * and save again using the same key.
        */
       if (expenses == null) {
-        localStorage.setItem("expenses", JSON.stringify([data]));
+        localStorage.setItem("expenses", JSON.stringify([dataForm]));
+        checkBudgetByCategory(dataForm);
         redirectToHomePage();
       } else {
-        const expenseList = JSON.parse(expenses);
-        expenseList.push(data);
+        let expenseList = expenses;
+        expenseList.push(dataForm);
         localStorage.setItem("expenses", JSON.stringify(expenseList));
+        checkBudgetByCategory(dataForm);
         redirectToHomePage();
       }
+    };
+
+    const checkBudgetByCategory = (dataForm) => {
+      const budgetList = JSON.parse(localStorage.getItem("budget"));
+      const expensesList = JSON.parse(localStorage.getItem("expenses"));
+
+      if (budgetList != null) {
+        let categoryAmount = 0;
+        expensesList.forEach((expense) => {
+          if (
+            expense.category === dataForm.category &&
+            yearMonthFormat(expense.date) === yearMonthFormat(dataForm.date)
+          ) {
+            categoryAmount += Number(expense.amount);
+          }
+        });
+
+        const categoryBudget = budgetList.find(
+          (budget) =>
+            budget.category === dataForm.category &&
+            yearMonthFormat(budget.date) === yearMonthFormat(dataForm.date)
+        );
+
+        if (categoryBudget !== undefined) {
+          if (categoryAmount > Number(categoryBudget.budget)) {
+            alert(
+              `You exceeded your monthly category budget. Your total current amount is $${categoryAmount}, and your budget is $${categoryBudget.budget}`
+            );
+          } else {
+            const budgetPercentage = (
+              (categoryAmount / Number(categoryBudget.budget)) *
+              100
+            ).toFixed(2);
+
+            if (budgetPercentage >= 90) {
+              alert(
+                `Your monthly category budget is close to the limit. Your total current amount is $${categoryAmount}, and your budget is $${categoryBudget.budget}`
+              );
+            }
+          }
+        }
+      }
+    };
+
+    const yearMonthFormat = (value) => {
+      const date = value.split("-");
+      return `${date[0]}-${date[1]}`;
     };
 
     const redirectToHomePage = () => {

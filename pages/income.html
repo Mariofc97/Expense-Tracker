@@ -48,76 +48,132 @@
         <div class="mb-3">
           <label for="date" class="form-label">Date</label>
           <input
-              type="month"  name="date"
-              class="form-control"
-              id="date"
-              required
+            type="month"
+            name="date"
+            class="form-control"
+            id="date"
+            required
           />
-      </div>
+        </div>
+        <div id="income-container"></div>
         <button type="submit" class="btn btn-primary btn-income">Save</button>
       </form>
     </main>
   </body>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-            const incomeData = localStorage.getItem("income");
-            let income = 0; // Initialize income
+    document.querySelector("form").addEventListener("submit", (event) => {
+      event.preventDefault();
 
-            if (incomeData) {
-                try {
-                    income = JSON.parse(incomeData);
-                } catch (e) {
-                    console.error("Invalid JSON in localStorage for income:", incomeData);
-                    localStorage.removeItem("income");
-                }
-            }
+      const formData = new FormData(event.target);
+      const formObject = Object.fromEntries(formData.entries());
 
+      saveInStorage(formObject);
+    });
 
-            const pElement = document.createElement("p");
-            pElement.classList.add("mt-2");
-            pElement.innerHTML = `<strong>Current income: </strong><span class="current-income">$${income}</span>`;
-            const input = document.querySelector("input[name=income]"); // Select the income input
-            input.after(pElement);
+    const saveInStorage = (dataForm) => {
+      const incomeStorage = localStorage.getItem("income");
 
+      if (incomeStorage == null) {
+        localStorage.setItem("income", JSON.stringify([dataForm]));
+        redirectToHomePage();
+      } else {
+        let incomeList = JSON.parse(incomeStorage);
+        let updateIncome = false;
 
-            document.querySelector("input[name=income]").addEventListener("keyup", (ev) => {
+        for (let index in incomeList) {
+          let date = incomeList[index].date;
+          if (dataForm.date === date) {
+            incomeList[index].income = dataForm.income;
+            updateIncome = true;
+            break;
+          }
+        }
 
-                const value = Number(ev.target.value);
-                const newIncome = income + value;
-                const currentIncomeElement = document.querySelector(".current-income");
+        if (!updateIncome) {
+          incomeList.push(dataForm);
+        }
 
-                if (currentIncomeElement !== null) {
-                    currentIncomeElement.innerHTML = `$${newIncome}`;
-                }
-            });
-        });
+        localStorage.setItem("income", JSON.stringify(incomeList));
+        redirectToHomePage();
+      }
+    };
 
+    const showCurrentIncome = () => {
+      const date = document.querySelector("input[name=date]").value;
+      const category = document.querySelector("input[name=income]").value;
+      const incomeStorage = JSON.parse(localStorage.getItem("income"));
 
-        document.querySelector("form").addEventListener("submit", (event) => {
-            event.preventDefault();
+      if (document.querySelector(".current-income-content") !== null) {
+        document.querySelector(".current-income-content").remove();
+      }
 
-            const formData = new FormData(event.target);
-            const formObject = Object.fromEntries(formData.entries());
+      if (incomeStorage != null) {
+        const income = incomeStorage.find((income) => income.date === date);
 
-            saveInStorage(formObject);
-        });
+        if (income !== undefined) {
+          const divElement = document.createElement("div");
+          divElement.classList.add("current-income-content", "mt-2");
+          const pElement = document.createElement("p");
+          pElement.innerHTML = `
+              <strong>Current income: </strong>
+              <span>$${income.income}</span>
+            `;
+          divElement.append(pElement);
 
-        const saveInStorage = (data) => {
-            let incomeStorage = localStorage.getItem("income");
-            let income = Number(data.income); 
+          document.querySelector("#income-container").append(divElement);
+          showNewIncome();
+        } else {
+          if (document.querySelector(".new-income-content") !== null) {
+            document.querySelector(".new-income-content").remove();
+          }
+        }
+      }
+    };
 
-            if (incomeStorage == null) {
-                localStorage.setItem("income", income);
-            } else {
-                const currentIncome = JSON.parse(incomeStorage);
-                const newIncome = currentIncome + income;
-                localStorage.setItem("income", newIncome);
-            }
-            redirectToHomePage();
-        };
+    const showNewIncome = () => {
+      const incomeStorage = JSON.parse(localStorage.getItem("income"));
+      const newIncome = Number(
+        document.querySelector("input[name=income]").value
+      );
 
-        const redirectToHomePage = () => {
-            window.location.href = "../index.html";
-        };
+      const date = document.querySelector("input[name=date]").value;
+      const income = document.querySelector("input[name=income]").value;
+
+      if (document.querySelector(".new-income-content") !== null) {
+        document.querySelector(".new-income-content").remove();
+      }
+
+      if (incomeStorage !== null && newIncome > 0 && income !== "") {
+        const currentIncome = incomeStorage.find(
+          (income) => income.date === date
+        );
+
+        if (currentIncome !== undefined) {
+          const divElement = document.createElement("div");
+          divElement.classList.add("new-income-content");
+          const pElement = document.createElement("p");
+          pElement.innerHTML = `
+              <strong>New income: </strong>
+              <span>$${newIncome}</span>
+            `;
+          divElement.append(pElement);
+          document.querySelector("#income-container").append(divElement);
+        }
+      }
+    };
+
+    document.querySelector("input").addEventListener("keyup", () => {
+      showCurrentIncome();
+    });
+
+    document
+      .querySelector("input[name=date]")
+      .addEventListener("change", () => {
+        showCurrentIncome();
+      });
+
+    const redirectToHomePage = () => {
+      window.location.href = "../index.html";
+    };
   </script>
 </html>
