@@ -46,11 +46,31 @@
           />
         </div>
         <div class="mb-3">
+          <label for="month" class="form-label">Month</label>
+          <select name="month" id="month" class="form-select">
+            <option value="" selected>Select a month...</option>
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
           <label for="category" class="form-label">Category</label>
           <select id="category" name="category" class="form-select" required>
             <option value="" selected>Choose a category...</option>
           </select>
         </div>
+        <div id="budget-container"></div>
         <button type="submit" class="btn btn-primary btn-budget">Save</button>
       </form>
     </main>
@@ -76,7 +96,9 @@
 
         let updateBudget = false;
         for (let index in budgetList) {
-          if (data.category === budgetList[index].category) {
+          let month = budgetList[index].month;
+          let category = budgetList[index].category;
+          if (data.month === month && data.category === category) {
             budgetList[index].budget = data.budget;
             updateBudget = true;
             break;
@@ -100,7 +122,7 @@
       const xhttp = new XMLHttpRequest();
       xhttp.onload = () => {
         const categories = JSON.parse(xhttp.response);
-        const selectElement = document.querySelector("select");
+        const selectElement = document.querySelector("select[name=category]");
         for (let item of categories) {
           selectElement.innerHTML += `<option value=${item.value}>${item.description}</option>`;
         }
@@ -110,41 +132,46 @@
     };
     loadCategories();
 
-    document
-      .querySelector("select[name=category]")
-      .addEventListener("change", (ev) => {
-        const value = ev.target.value;
-        const budgetStorage = JSON.parse(localStorage.getItem("budget"));
+    const showCurrentBudget = () => {
+      const month = document.querySelector("select[name=month]").value;
+      const category = document.querySelector("select[name=category]").value;
+      const budgetStorage = JSON.parse(localStorage.getItem("budget"));
 
-        if (document.querySelector(".current-budget-content") !== null) {
-          document.querySelector(".current-budget-content").remove();
-        }
+      if (document.querySelector(".current-budget-content") !== null) {
+        document.querySelector(".current-budget-content").remove();
+      }
 
-        if (budgetStorage != null) {
-          const budget = budgetStorage.find(
-            (budget) => budget.category === value
-          );
+      if (budgetStorage != null) {
+        const budget = budgetStorage.find(
+          (budget) => budget.month === month && budget.category === category
+        );
 
-          if (budget !== undefined) {
-            const divElement = document.createElement("div");
-            divElement.classList.add("current-budget-content", "mt-2");
-            const pElement = document.createElement("p");
-            pElement.innerHTML = `
+        if (budget !== undefined) {
+          const divElement = document.createElement("div");
+          divElement.classList.add("current-budget-content", "mt-2");
+          const pElement = document.createElement("p");
+          pElement.innerHTML = `
               <strong>Current budget: </strong>
               <span>$${budget.budget}</span>
             `;
-            divElement.append(pElement);
-            ev.target.after(divElement);
+          divElement.append(pElement);
+          document.querySelector("#budget-container").append(divElement);
+          showNewBudget();
+        } else {
+          if (document.querySelector(".new-budget-content") !== null) {
+            document.querySelector(".new-budget-content").remove();
           }
         }
-        showNewBudget();
-      });
+      }
+    };
 
     const showNewBudget = () => {
       const budgetStorage = JSON.parse(localStorage.getItem("budget"));
       const newBudget = Number(
         document.querySelector("input[name=budget]").value
       );
+
+      const month = document.querySelector("select[name=month]").value;
       const category = document.querySelector("select[name=category]").value;
 
       if (document.querySelector(".new-budget-content") !== null) {
@@ -153,7 +180,7 @@
 
       if (budgetStorage !== null && newBudget > 0 && category !== "") {
         const currentBudget = budgetStorage.find(
-          (budget) => budget.category === category
+          (budget) => budget.month === month && budget.category === category
         );
 
         if (currentBudget !== undefined) {
@@ -165,10 +192,22 @@
               <span>$${newBudget}</span>
             `;
           divElement.append(pElement);
-          document.querySelector(".current-budget-content").after(divElement);
+          document.querySelector("#budget-container").append(divElement);
         }
       }
     };
+
+    document
+      .querySelector("select[name=category]")
+      .addEventListener("change", (ev) => {
+        showCurrentBudget();
+      });
+
+    document
+      .querySelector("select[name=month]")
+      .addEventListener("change", () => {
+        showCurrentBudget();
+      });
 
     document
       .querySelector("input[name=budget]")
