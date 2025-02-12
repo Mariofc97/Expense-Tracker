@@ -46,22 +46,14 @@
           />
         </div>
         <div class="mb-3">
-          <label for="month" class="form-label">Month</label>
-          <select name="month" id="month" class="form-select">
-            <option value="" selected>Select a month...</option>
-            <option value="01">January</option>
-            <option value="02">February</option>
-            <option value="03">March</option>
-            <option value="04">April</option>
-            <option value="05">May</option>
-            <option value="06">June</option>
-            <option value="07">July</option>
-            <option value="08">August</option>
-            <option value="09">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-          </select>
+          <label for="date" class="form-label">Date</label>
+          <input
+            type="month"
+            name="date"
+            class="form-control"
+            id="date"
+            required
+          />
         </div>
 
         <div class="mb-3">
@@ -133,7 +125,7 @@
     loadCategories();
 
     const showCurrentBudget = () => {
-      const month = document.querySelector("select[name=month]").value;
+      const date = document.querySelector("input[name=date]").value;
       const category = document.querySelector("select[name=category]").value;
       const budgetStorage = JSON.parse(localStorage.getItem("budget"));
 
@@ -143,7 +135,7 @@
 
       if (budgetStorage != null) {
         const budget = budgetStorage.find(
-          (budget) => budget.month === month && budget.category === category
+          (budget) => budget.date === date && budget.category === category
         );
 
         if (budget !== undefined) {
@@ -171,7 +163,7 @@
         document.querySelector("input[name=budget]").value
       );
 
-      const month = document.querySelector("select[name=month]").value;
+      const date = document.querySelector("input[name=date]").value;
       const category = document.querySelector("select[name=category]").value;
 
       if (document.querySelector(".new-budget-content") !== null) {
@@ -180,7 +172,7 @@
 
       if (budgetStorage !== null && newBudget > 0 && category !== "") {
         const currentBudget = budgetStorage.find(
-          (budget) => budget.month === month && budget.category === category
+          (budget) => budget.date === date && budget.category === category
         );
 
         if (currentBudget !== undefined) {
@@ -204,7 +196,7 @@
       });
 
     document
-      .querySelector("select[name=month]")
+      .querySelector("input[name=date]")
       .addEventListener("change", () => {
         showCurrentBudget();
       });
