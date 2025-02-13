@@ -119,7 +119,7 @@
             /></a>
           </div>
         </div>
-        <div class="option open-options">
+        <div class="option open-options" style="justify-content: center; align-items: center; object-fit: contain; display: flex;">
           <img src="./assets/add.png" alt="Open Options" />
         </div>
       </div>
@@ -152,6 +152,12 @@
           optionsElements.forEach((element) =>
             element.classList.toggle("d-none", !optionsOpened)
           );
+            let floatingButton = document.querySelector(".open-options img");
+            if (optionsOpened) {
+              floatingButton.src = "./assets/close.png";
+            } else {
+              floatingButton.src = "./assets/add.png";
+            }
         }
       });
 
