@@ -393,7 +393,7 @@
         const budgets = JSON.parse(localStorage.getItem("budget")) || [];
         
         if (budgets.length === 0) {
-          budgetListContain.innerHTML = "<p class='text-muted text-center'>No budgets recorded.</p>"
+          budgetListContain.innerHTML = "<p class='text-muted'>No budgets recorded.</p>"
         } else {
           budgets.forEach((budget) => {
             const budgetItem = document.createElement("div");
