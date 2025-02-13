@@ -244,7 +244,7 @@
       </div>
       <div class="text-end">
         <h6 class="text-danger">- $${expense.amount}</h6>
-        <p class="text-muted small">${formatDate(expense.date)}</p>
+        <p class="text-muted small">${(expense.date)}</p>
       </div>
     `;
 
@@ -362,15 +362,6 @@
 
       function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
-      }
-
-      function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleTimeString([], {
-          day: "2-digit",
-          month: "2-digit",
-          year: "2-digit",
-        });
       }
 
       function addListenerNavigation(expenseItem) {
