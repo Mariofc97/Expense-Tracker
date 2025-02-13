@@ -45,58 +45,79 @@
             required
           />
         </div>
+        <div class="mb-3">
+          <label for="date" class="form-label">Date</label>
+          <input
+              type="month"  name="date"
+              class="form-control"
+              id="date"
+              required
+          />
+      </div>
         <button type="submit" class="btn btn-primary btn-income">Save</button>
       </form>
     </main>
   </body>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const income = JSON.parse(localStorage.getItem("income"));
+            const incomeData = localStorage.getItem("income");
+            let income = 0; // Initialize income
 
-      if (income !== null) {
-        const pElement = document.createElement("p");
-        pElement.classList.add("mt-2");
-        pElement.innerHTML = `
-          <strong>Current income: </strong>
-          <span class="current-income">$${income}</span>
-        `;
-        const input = document.querySelector("input");
-        input.after(pElement);
-      }
-    });
+            if (incomeData) {
+                try {
+                    income = JSON.parse(incomeData);
+                } catch (e) {
+                    console.error("Invalid JSON in localStorage for income:", incomeData);
+                    localStorage.removeItem("income");
+                }
+            }
 
-    document.querySelector("input").addEventListener("keyup", (ev) => {
-      const income = JSON.parse(localStorage.getItem("income"));
-      const value = Number(ev.target.value);
-      const newIncome = income + value;
-      const currentIncomeElement = document.querySelector(".current-income");
 
-      if (currentIncomeElement !== null) {
-        currentIncomeElement.innerHTML = `$${newIncome}`;
-      }
-    });
+            const pElement = document.createElement("p");
+            pElement.classList.add("mt-2");
+            pElement.innerHTML = `<strong>Current income: </strong><span class="current-income">$${income}</span>`;
+            const input = document.querySelector("input[name=income]"); // Select the income input
+            input.after(pElement);
 
-    document.querySelector("form").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const income = document.querySelector("input[name=income]").value;
-      saveInStorage(Number(income));
-    });
 
-    const saveInStorage = (income) => {
-      let incomeStorage = localStorage.getItem("income");
-      if (incomeStorage == null) {
-        localStorage.setItem("income", income);
-        redirectToHomePage();
-      } else {
-        const currentIncome = JSON.parse(incomeStorage);
-        const newIncome = currentIncome + income;
-        localStorage.setItem("income", newIncome);
-        redirectToHomePage();
-      }
-    };
+            document.querySelector("input[name=income]").addEventListener("keyup", (ev) => {
 
-    const redirectToHomePage = () => {
-      window.location.href = "../index.html";
-    };
+                const value = Number(ev.target.value);
+                const newIncome = income + value;
+                const currentIncomeElement = document.querySelector(".current-income");
+
+                if (currentIncomeElement !== null) {
+                    currentIncomeElement.innerHTML = `$${newIncome}`;
+                }
+            });
+        });
+
+
+        document.querySelector("form").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const formObject = Object.fromEntries(formData.entries());
+
+            saveInStorage(formObject);
+        });
+
+        const saveInStorage = (data) => {
+            let incomeStorage = localStorage.getItem("income");
+            let income = Number(data.income); 
+
+            if (incomeStorage == null) {
+                localStorage.setItem("income", income);
+            } else {
+                const currentIncome = JSON.parse(incomeStorage);
+                const newIncome = currentIncome + income;
+                localStorage.setItem("income", newIncome);
+            }
+            redirectToHomePage();
+        };
+
+        const redirectToHomePage = () => {
+            window.location.href = "../index.html";
+        };
   </script>
 </html>
