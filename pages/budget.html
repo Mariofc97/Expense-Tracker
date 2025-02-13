@@ -82,15 +82,16 @@
 
       if (budgetStorage == null) {
         localStorage.setItem("budget", JSON.stringify([data]));
-        redirectToHomePage();
+        alert("Budget added with success!");
+        resetForm();
       } else {
         let budgetList = JSON.parse(budgetStorage);
-
         let updateBudget = false;
+
         for (let index in budgetList) {
-          let month = budgetList[index].month;
+          let date = budgetList[index].date;
           let category = budgetList[index].category;
-          if (data.month === month && data.category === category) {
+          if (data.date === date && data.category === category) {
             budgetList[index].budget = data.budget;
             updateBudget = true;
             break;
@@ -102,8 +103,13 @@
         }
 
         localStorage.setItem("budget", JSON.stringify(budgetList));
-        redirectToHomePage();
+        alert("Budget added with success!");
+        resetForm();
       }
+    };
+
+    const resetForm = () => {
+      document.querySelector("form").reset();
     };
 
     const redirectToHomePage = () => {

@@ -31,26 +31,13 @@
     <header class="gradient-section">
       <nav class="d-flex justify-content-between align-items-center p-5">
         <i class="fa-solid fa-user fa-2xl" style="color: #7f3dff"></i>
-        <select
-          name="select-month"
-          id="select-month"
+        <input
+          type="month"
+          name="date"
+          id="date"
           class="form-select w-auto text-center"
           style="border-radius: 40px; border: 2px solid #7f3dff"
-        >
-          <option value="">All months</option>
-          <option value="01">January</option>
-          <option value="02">February</option>
-          <option value="03">March</option>
-          <option value="04">April</option>
-          <option value="05">May</option>
-          <option value="06">June</option>
-          <option value="07">July</option>
-          <option value="08">Auguts</option>
-          <option value="09">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
-        </select>
+        />
         <i class="fa-solid fa-bell fa-2xl" style="color: #7f3dff"></i>
       </nav>
     </header>
@@ -136,109 +123,112 @@
   </body>
 
   <script>
-   document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => {
+      let optionsOpened = false;
 
-  const monthSelect = document.getElementById("select-month");
-  let selectedMonth = ""; 
-  let optionsOpened = false; 
+      document
+        .querySelector("input[name=date]")
+        .addEventListener("change", (event) => {
+          const selectedYearMonth = event.target.value;
+          updateChartsAndTotals(selectedYearMonth);
+        });
 
-  monthSelect.addEventListener("change", () => {
-    selectedMonth = monthSelect.value;
-    updateChartsAndTotals(selectedMonth); 
-  });
+      document.querySelector("footer").addEventListener("click", (event) => {
+        const target = event.target;
 
-  document.querySelector("footer").addEventListener("click", (event) => {
-    const target = event.target;
-
-    if (target.closest(".add-income")) { 
-      window.location.href = "./pages/income.html";
-    } else if (target.closest(".add-expense")) {
-      window.location.href = "./pages/create-expense.html";
-    } else if (target.closest(".set-budget")) {
-      window.location.href = "./pages/budget.html";
-    } else if (target.closest(".open-options")) {
-      optionsOpened = !optionsOpened;
-      const optionsElements = document.querySelectorAll(".float-option");
-      optionsElements.forEach(element => element.classList.toggle("d-none", !optionsOpened));
-    }
-  });
-
-  function updateChartsAndTotals(month) {
-    const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-    let incomeData = localStorage.getItem("income");
-    let totalIncome = incomeData ? JSON.parse(incomeData) : 0; 
-
-
-    let filteredExpenses = expenses;
-    if (month) {
-      filteredExpenses = expenses.filter(expense => {
-        const expenseMonth = new Date(expense.date).getMonth() + 1;
-        return String(expenseMonth).padStart(2, '0') === month;
-      });
-    }
-
-
-    let filteredIncome = 0;
-    if (month) {
-
-      const expensesForMonth = expenses.filter(expense => {
-        const expenseMonth = new Date(expense.date).getMonth() + 1;
-        return String(expenseMonth).padStart(2, '0') === month;
+        if (target.closest(".add-income")) {
+          window.location.href = "./pages/income.html";
+        } else if (target.closest(".add-expense")) {
+          window.location.href = "./pages/create-expense.html";
+        } else if (target.closest(".set-budget")) {
+          window.location.href = "./pages/budget.html";
+        } else if (target.closest(".open-options")) {
+          optionsOpened = !optionsOpened;
+          const optionsElements = document.querySelectorAll(".float-option");
+          optionsElements.forEach((element) =>
+            element.classList.toggle("d-none", !optionsOpened)
+          );
+        }
       });
 
-      filteredIncome = expensesForMonth.reduce((sum, expense) => {
-        const incomeForExpense = JSON.parse(localStorage.getItem("income")) || 0;
-        console.log(incomeForExpense);
-        console.log(sum);
-        return sum + Number(incomeForExpense);
-      }, 0);
+      function yearMonthFormat(value) {
+        const date = value.split("-");
+        return `${date[0]}-${date[1]}`;
+      }
 
-    } else {
+      function updateChartsAndTotals(yearMonth) {
+        const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+        const incomes = JSON.parse(localStorage.getItem("income")) || [];
 
-      filteredIncome = incomeData ? JSON.parse(incomeData) : 0;
-    }
+        let filteredExpenses = expenses;
+        let filteredIncome = incomes;
+        if (yearMonth) {
+          filteredExpenses = expenses.filter((expense) => {
+            const expenseYearMonth = yearMonthFormat(expense.date);
+            return expenseYearMonth === yearMonth;
+          });
 
-   
-    updateExpenseList(filteredExpenses);
-    updateTotals(filteredExpenses, filteredIncome); 
-    updateCharts(filteredExpenses); 
-  }
+          filteredIncome = incomes.filter((income) => {
+            const incomeYearMonth = yearMonthFormat(income.date);
+            return incomeYearMonth === yearMonth;
+          });
+        }
 
+        updateExpenseList(filteredExpenses);
+        updateTotals(filteredExpenses, filteredIncome);
+        updateCharts(filteredExpenses);
+      }
 
-  function updateTotals(expenses, totalIncome) { 
-    const totalExpenses = expenses.reduce((sum, expense) => sum + Number(expense.amount), 0);
-    document.querySelector(".containerExpense .contentCards strong").textContent = `$${totalExpenses}`;
-    document.querySelector(".containerIncome .contentCards strong").textContent = `$${totalIncome}`; 
+      function updateTotals(expenses, incomes) {
+        const totalExpenses = expenses.reduce(
+          (sum, expense) => sum + Number(expense.amount),
+          0
+        );
+        const totalIncomes = incomes.reduce(
+          (sum, income) => sum + Number(income.income),
+          0
+        );
+        document.querySelector(
+          ".containerExpense .contentCards strong"
+        ).textContent = `$${totalExpenses}`;
+        document.querySelector(
+          ".containerIncome .contentCards strong"
+        ).textContent = `$${totalIncomes}`;
 
-    const totalAccountBalance = totalIncome - totalExpenses;
-    document.querySelector(".totalAccountBalance").textContent = `$${totalAccountBalance.toFixed(2)}`;
-  }
+        const totalAccountBalance = totalIncomes - totalExpenses;
+        document.querySelector(
+          ".totalAccountBalance"
+        ).textContent = `$${totalAccountBalance.toFixed(2)}`;
+      }
 
-  function updateExpenseList(expenses) {
-  const expenseListContainer = document.getElementById("expenseList");
-  expenseListContainer.innerHTML = ""; 
-  const sortedExpenses = expenses.sort((a, b) => new Date(b.date) - new Date(a.date));
-  const lastTwoExpenses = sortedExpenses.slice(0, 2);
+      function updateExpenseList(expenses) {
+        const expenseListContainer = document.getElementById("expenseList");
+        expenseListContainer.innerHTML = "";
+        const sortedExpenses = expenses.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        const lastTwoExpenses = sortedExpenses.slice(0, 3);
 
-  if (lastTwoExpenses.length === 0) {
-    expenseListContainer.innerHTML = "<p class='text-muted'>No expenses recorded for this month.</p>";
-    return;
-  }
+        if (lastTwoExpenses.length === 0) {
+          expenseListContainer.innerHTML =
+            "<p class='text-muted'>No expenses recorded.</p>";
+          return;
+        }
 
-  lastTwoExpenses.forEach((expense) => {
-    const expenseItem = document.createElement("div");
-    expenseItem.classList.add(
-      "expense-item",
-      "d-flex",
-      "justify-content-between",
-      "align-items-center",
-      "p-3",
-      "mb-3"
-    );
+        lastTwoExpenses.forEach((expense) => {
+          const expenseItem = document.createElement("div");
+          expenseItem.classList.add(
+            "expense-item",
+            "d-flex",
+            "justify-content-between",
+            "align-items-center",
+            "p-3",
+            "mb-3"
+          );
 
-    expenseItem.setAttribute("expense", expense.id);
+          expenseItem.setAttribute("expense", expense.id);
 
-    expenseItem.innerHTML = `
+          expenseItem.innerHTML = `
       <div class="d-flex align-items-center">
         <div class="icon-box ${expense.category.toLowerCase()}">
           ${getCategoryIcon(expense.category)}
@@ -254,122 +244,141 @@
       </div>
     `;
 
-    expenseListContainer.appendChild(expenseItem);
-    addListenerNavigation(expenseItem);
-  });
-}
+          expenseListContainer.appendChild(expenseItem);
+          addListenerNavigation(expenseItem);
+        });
+      }
 
-  function updateCharts(expenses) {
-    const categoryTotals = {};
-    const monthlyTotals = {};
+      function updateCharts(expenses) {
+        const categoryTotals = {};
+        const monthlyTotals = {};
 
-    expenses.forEach(({ category, amount, date }) => {
-      const monthYear = new Date(date).toLocaleString("en-US", {
-        month: "short",
-        year: "numeric",
-      });
+        expenses.forEach(({ category, amount, date }) => {
+          const monthYear = new Date(date).toLocaleString("en-US", {
+            month: "short",
+            year: "numeric",
+          });
 
-      if (!categoryTotals[category]) categoryTotals[category] = 0;
-      categoryTotals[category] += Number(amount);
+          if (!categoryTotals[category]) categoryTotals[category] = 0;
+          categoryTotals[category] += Number(amount);
 
-      if (!monthlyTotals[monthYear]) monthlyTotals[monthYear] = 0;
-      monthlyTotals[monthYear] += Number(amount);
+          if (!monthlyTotals[monthYear]) monthlyTotals[monthYear] = 0;
+          monthlyTotals[monthYear] += Number(amount);
+        });
+
+        let emptyChart = {};
+        if (expenses.length === 0) {
+          emptyChart = {
+            xaxis: { visible: false },
+            yaxis: { visible: false },
+            annotations: [
+              {
+                text: "No match data found",
+                xref: "paper",
+                yref: "paper",
+                showarrow: false,
+                font: {
+                  size: 28,
+                },
+              },
+            ],
+          };
+        }
+
+        const layout = {
+          title: { text: "", font: { size: 18 } },
+          margin: { l: 40, r: 40, t: 50, b: 50 },
+          responsive: true,
+          ...emptyChart,
+        };
+
+        const categoryColours = {
+          food: "#ff7043",
+          shopping: "#ffc107",
+          entertainment: "#fd3c4a",
+          subscription: "#7e57c2",
+          transportation: "#03a9f4",
+        };
+
+        const labels = Object.keys(categoryTotals);
+        const colours = labels.map(
+          (category) => categoryColours[category] || "💰"
+        );
+
+        Plotly.newPlot(
+          "pieChart",
+          [
+            {
+              labels: labels,
+              values: Object.values(categoryTotals),
+              type: "pie",
+              marker: { colors: colours },
+            },
+          ],
+          { ...layout, title: "Expense Distribution by Category" },
+          { displayModeBar: false }
+        );
+
+        const sortedMonths = Object.keys(monthlyTotals).sort(
+          (a, b) => new Date(a) - new Date(b)
+        );
+
+        Plotly.newPlot(
+          "barGraph",
+          [
+            {
+              x: sortedMonths,
+              y: sortedMonths.map((month) => monthlyTotals[month]),
+              type: "bar",
+              marker: { color: "rgb(127, 61, 255)" },
+            },
+          ],
+          {
+            ...layout,
+            title: "Monthly Expenses",
+            xaxis: { title: "Month" },
+            yaxis: { title: "Total Amount ($)" },
+          },
+          { displayModeBar: false }
+        );
+      }
+
+      updateChartsAndTotals();
+
+      function getCategoryIcon(category) {
+        const icons = {
+          shopping: "<i class='fa-solid fa-cart-shopping'></i>",
+          food: "<i class='fa-solid fa-utensils'></i>",
+          subscription: "<i class='fa-solid fa-dollar-sign'></i>",
+          entertainment: "<i class='fa-solid fa-face-smile'></i>",
+          transportation: "<i class='fa-solid fa-car'></i>",
+        };
+        return icons[category.toLowerCase()] || "💰";
+      }
+
+      function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleTimeString([], {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+        });
+      }
+
+      function addListenerNavigation(expenseItem) {
+        expenseItem.addEventListener("click", () => {
+          const expense = expenseItem.getAttribute("expense");
+          navigateToDetailPage(expense);
+        });
+      }
+
+      function navigateToDetailPage(expense) {
+        window.location.href = `./pages/detail-expense.html?expense=${expense}`;
+      }
     });
-
-
-    const layout = {
-      title: { text: "", font: { size: 18 } },
-      margin: { l: 40, r: 40, t: 50, b: 50 },
-      responsive: true,
-    };
-
-    const categoryColours = {
-      food: "#ff7043",
-      shopping: "#ffc107",
-      entertainment: "#fd3c4a",
-      subscription: "#7e57c2",
-      transportation: "#03a9f4"
-    };
-
-    const labels = Object.keys(categoryTotals);
-    const colours = labels.map(category => categoryColours[category] || "💰");
-
-    Plotly.newPlot(
-      "pieChart",
-      [
-        {
-          labels: labels,
-          values: Object.values(categoryTotals),
-          type: "pie",
-          marker: { colors: colours }
-        },
-      ],
-      { ...layout, title: "Expense Distribution by Category" },
-      { displayModeBar: false }
-    );
-
-
-    const sortedMonths = Object.keys(monthlyTotals).sort(
-      (a, b) => new Date(a) - new Date(b)
-    );
-
-    Plotly.newPlot(
-      "barGraph",
-      [
-        {
-          x: sortedMonths,
-          y: sortedMonths.map((month) => monthlyTotals[month]),
-          type: "bar",
-          marker: { color: "rgb(127, 61, 255)" },
-        },
-      ],
-      {
-        ...layout,
-        title: "Monthly Expenses",
-        xaxis: { title: "Month" },
-        yaxis: { title: "Total Amount ($)" },
-      },
-      { displayModeBar: false }
-    );
-  }
-
-  updateChartsAndTotals();
-
-  function getCategoryIcon(category) {
-    const icons = {
-      shopping: "<i class='fa-solid fa-cart-shopping'></i>",
-      food: "<i class='fa-solid fa-utensils'></i>",
-      subscription: "<i class='fa-solid fa-dollar-sign'></i>",
-      entertainment: "<i class='fa-solid fa-face-smile'></i>",
-      transportation: "<i class='fa-solid fa-car'></i>",
-    };
-    return icons[category.toLowerCase()] || "💰";
-  }
-
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString([], {
-      day: "2-digit",
-      month: "2-digit",
-      year: "2-digit",
-    });
-  }
-
-  function addListenerNavigation(expenseItem) {
-    expenseItem.addEventListener("click", () => {
-      const expense = expenseItem.getAttribute("expense");
-      navigateToDetailPage(expense);
-    });
-  }
-
-  function navigateToDetailPage(expense) {
-    window.location.href = `./pages/detail-expense.html?expense=${expense}`;
-  }
-});
   </script>
-  
 </html>
