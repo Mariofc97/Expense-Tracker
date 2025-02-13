@@ -119,7 +119,15 @@
             /></a>
           </div>
         </div>
-        <div class="option open-options" style="justify-content: center; align-items: center; object-fit: contain; display: flex;">
+        <div
+          class="option open-options"
+          style="
+            justify-content: center;
+            align-items: center;
+            object-fit: contain;
+            display: flex;
+          "
+        >
           <img src="./assets/add.png" alt="Open Options" />
         </div>
       </div>
@@ -152,12 +160,12 @@
           optionsElements.forEach((element) =>
             element.classList.toggle("d-none", !optionsOpened)
           );
-            let floatingButton = document.querySelector(".open-options img");
-            if (optionsOpened) {
-              floatingButton.src = "./assets/close.png";
-            } else {
-              floatingButton.src = "./assets/add.png";
-            }
+          let floatingButton = document.querySelector(".open-options img");
+          if (optionsOpened) {
+            floatingButton.src = "./assets/close.png";
+          } else {
+            floatingButton.src = "./assets/add.png";
+          }
         }
       });
 
@@ -250,7 +258,7 @@
       </div>
       <div class="text-end">
         <h6 class="text-danger">- $${expense.amount}</h6>
-        <p class="text-muted small">${(expense.date)}</p>
+        <p class="text-muted small">${expense.date}</p>
       </div>
     `;
 
@@ -391,7 +399,7 @@
 
         if (budgets.length === 0) {
           budgetListContain.innerHTML =
-            "<p class='text-muted text-center'>No budgets recorded.</p>";
+            "<p class='text-muted'>No budgets recorded.</p>";
         } else {
           budgets.forEach((budget) => {
             const budgetItem = document.createElement("div");
